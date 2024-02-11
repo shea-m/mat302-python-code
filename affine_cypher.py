@@ -1,53 +1,42 @@
 import numpy as np
 
+# TODO: Allow for encryption of all asci characters?
+# TODO: Write output to a text file?
+
 AFFINE_ORDERS = [1, 2, 3, 4, 6, 12]
+ZSTAR26 = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
 
-
-def encrypt2decrypt(a: int, b: int):
+def key_swap(a: int, b: int):
     for i in AFFINE_ORDERS:
         if pow(a, i, 26) == 1:
-            return pow(a, i-1, 26), b
+            a_inv = pow(a, i-1, 26)
+            return a_inv, -b*a_inv % 26
 
 
 def encryptAffine(p: str, a: int, b: int):
     c = ""
     for char in p:
-        numval = ord(char) - 65
-        if numval == -33:
+        ascii = ord(char) - 65
+        if ascii == -33:
             c += " "
             continue
-        new_pos = np.mod(a*numval + b, 26)
+        new_pos = np.mod(a*ascii + b, 26)
         c += chr(new_pos + 65)
     return c
 
-
-def decryptAffine(c: str, a: int, b: int):
-    p = ""
-    a, b = encrypt2decrypt(a, b)
-    for char in c:
-        numval = ord(char) - 65
-        if numval == -33:
-            p += " "
-            continue
-        new_pos = np.mod((numval - b)*a, 26)
-        p += chr(new_pos + 65)
-    return p
+def decryptAffine(c: str, a: int, b:int):
+    a_d, b_d = key_swap(a,b)
+    return encryptAffine(c, a_d, b_d)
 
 
 def decryptAffineBrute(c: str):
-    p = ""
-    potentials = []
-    U26 = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
+    possibilities = {}
     for b in range(0, 25):
-        for a in U26:
-            aprime, bprime = encrypt2decrypt(a, b)
-            for char in c:
-                numval = ord(char) - 65
-                if numval == -33:
-                    p += " "
-                    continue
-                new_pos = np.mod((numval - bprime)*aprime, 26)
-                p += chr(new_pos + 65)
-            potentials.append(p)
-            p = ""
-    return potentials
+        for a in ZSTAR26:
+            ptext = decryptAffine(c, a, b)
+            possibilities[(a,b)] = ptext
+            # print(f"Decryption Possibility: {ptext} with key pair ({a}, {b})")
+    return possibilities
+
+ctext = encryptAffine("TEST", 11, 23)
+print(decryptAffineBrute(ctext))

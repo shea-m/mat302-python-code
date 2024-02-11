@@ -1,0 +1,3 @@
+Todo List:
+    - Make all files as classes (different cyphers, primality etc)
+    - Make one main file to call all the functions from

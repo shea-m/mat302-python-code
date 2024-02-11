@@ -2,7 +2,7 @@ import numpy as np
 import random
 # This file contains functions to:
 #   Check primarity of a number (to an extremely high degree of certainty)
-#   Generate pseudoprime (to an extremely high degree of certainty)
+#   Generate probabalistic prime (to an extremely high degree of certainty)
 
 # TODO: Make some improvements
 
@@ -43,3 +43,5 @@ def generate_prime(n: int):
     while not primality_test(k):
         k = random.randint(2, n-1)
     return k
+
+print(generate_prime(265748756348936589346583968945768934372652358295628973562389))
