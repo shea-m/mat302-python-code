@@ -1,2 +1,4 @@
 # mat302-python-code
-Encryption/Decryption Functions and other misc code from MAT302
+Scripts and stuff for various MAT302 activities. Pretty basic stuff,
+I'm a very basic python user, so there's likely plenty of optimization
+that can be done, but this is my own work so it's not perfect

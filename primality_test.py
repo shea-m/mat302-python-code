@@ -1,5 +1,6 @@
 import numpy as np
-import random
+import random as rand
+TEST_COUNT = 128
 # This file contains functions to:
 #   Check primarity of a number (to an extremely high degree of certainty)
 #   Generate probabalistic prime (to an extremely high degree of certainty)
@@ -14,8 +15,8 @@ def pow_2_factor(n: int):
     return k, n
 
 def primality_test(n: int):
-    for i in range (1, 64):
-        a_i = random.randint(2, n-1)
+    for i in range (1, TEST_COUNT):
+        a_i = rand.randint(2, n-1)
         if np.gcd(n, a_i) != 1:
             return False
         elif pow(a_i, n-1, n) != 1:
@@ -37,11 +38,11 @@ def primality_test(n: int):
     return True
 
 def generate_prime(n: int):
-    k = random.randint(2, n-1)
+    k = rand.randint(2, n-1)
     if k % 2 == 0:
         k += 1
     while not primality_test(k):
-        k = random.randint(2, n-1)
+        k = rand.randint(2, n-1)
     return k
 
 print(generate_prime(265748756348936589346583968945768934372652358295628973562389))
