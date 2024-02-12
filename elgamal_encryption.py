@@ -26,7 +26,7 @@ def elgamal_Alice(p=P_PRIME, g=G_GEN):
     a = rand.randint(1, p-1)
     return pow(g, a, p)
 
-def elgamal_encrypt(A: int, m: str, p=P_PRIME):
+def elgamal_encrypt(A: int, m: str, p=P_PRIME, g=G_GEN):
     k = rand.randint(1, p-1)
     c1 = pow(g, k, p)
     # Convert m to nums first
