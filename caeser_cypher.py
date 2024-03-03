@@ -1,7 +1,9 @@
 import numpy as np
 # TODO: Potentially allow encryption of all ascii characters?
 
-def encryptCaeser(p: str, b: int):
+def encrypt_caeser(p: str, b: int):
+    """Encrypts plaintext into cyphertext using a Caeser Cypher given:
+    plaintext <p>, key <b>"""
     c = ""
     for char in p:
         ascii = ord(char) - 65
@@ -12,19 +14,23 @@ def encryptCaeser(p: str, b: int):
     return c
 
 
-def decryptCaser(c: str, b: int):
-    return encryptCaeser(c, -b)
+def decrypt_caeser(c: str, b: int):
+    """Decrypts cyphertext to plaintext using a Caeser Cypher given:
+    cyphertext <c>, key <b>"""
+    return encrypt_caeser(c, -b)
 
 
-def decryptCaserBrute(c: str):
+def decrypt_caeser_brute(c: str):
+    """Decrypts cyphertext encrypted with a Caser Cypher by brute force given:
+    cyphertext <c>"""
     possibilities = {}
     for b in range(0, 26):
-        ptext = decryptCaser(c, b)
+        ptext = decrypt_caeser(c, b)
         possibilities[b] = ptext
         print(f"Decryption Possibility: {ptext} with key {b}")
     return possibilities
 
 ptext = "TEST"
-ctext = encryptCaeser(ptext, 15)
-print(decryptCaser(ctext, 15))
-decryptCaserBrute(ctext)
+ctext = encrypt_caeser(ptext, 15)
+print(decrypt_caeser(ctext, 15))
+decrypt_caeser_brute(ctext)

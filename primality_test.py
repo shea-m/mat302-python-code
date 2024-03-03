@@ -13,6 +13,7 @@ SEED_200 = 938058629050914565036613333381619803945728800443779293120846776592400
 
 
 def pow_2_factor(n: int):
+    """Factors even integer n into form 2^k * n"""
     k = 0
     while (n % 2 == 0):
         k += 1
@@ -20,6 +21,8 @@ def pow_2_factor(n: int):
     return k, n
 
 def primality_test(n: int, wit_num=128):
+    """Miller-Rabin probablistic primality test to determine if n is 
+    probably prime using <wit_num> number of witnesses"""
     for i in range (1, wit_num+1):
         a_i = rand.randint(2, n-1)
         print(f"Checking {a_i} (num {i})...")
@@ -48,6 +51,8 @@ def primality_test(n: int, wit_num=128):
     return True
 
 def generate_prime(n: int):
+    """Generates a probabalistic prime using Miller-Rabin with size bounded
+    by n, 2n"""
     k = rand.randint(2, n-1)
     if k % 2 == 0:
         k += 1

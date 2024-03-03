@@ -1,3 +1,6 @@
+# NOTE: This is just brainstorming. For actual encryption/decryption and 
+# bruteforce solving methods, see a3_jacky.py
+
 # Starts similar to DHKE
 # Trusted 3rd party picks p and g
 # Alice will pick some 1 <= a <= p-1, publish A = g^a mod p

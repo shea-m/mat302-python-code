@@ -19,32 +19,33 @@ bob_priv = pow(G, bob_priv, P)
 # such im treating this as enrypting one number as the message
 
 def encrypt_elgamal(m: int, A: int, b: int) -> tuple[int, int]:
-    """Encrypt message <m> with with public key <A> and private key
-    <b> using the Elgamal scheme into cypher text <c1> and <c2>"""
+    """Encrypts plaintext to cypher text using an Elgamal Scheme given:
+    plaintext message <m>, public key <A>, private key <b>"""
     c1 = pow(G, b, P)
     c2 = (m * pow(A, b, P)) % P
     return (c1, c2)
 
 
 def decrypt_elgamal(c1: int, c2: int, a: int) -> int:
-    """Decrypt cypher text <c1> and <c2> into plaintext using key <a>"""
+    """Decrypt cyphertext encrypted with an Elgamal Scheme given:
+    cyphertext1 <c1>, cyphertext2 <c2>, private key <a>"""
     return (pow(c1, -a, P)*c2 % P)
     
 
 def shanks_collision() -> int:
-    """Given discrete log problem g^x = y log p, with g, y, and p known,
-    solves for x with O(2^(k/2)k^2) bit complexity"""
+    """Given discrete log problem g^x = y log p with known: 
+    prime <p>, generator <g>, integer <y>,
+    Solves for x with bit complexity O(2^(k/2)k^2)"""
     return
 
 
-# This one I probably wont get to tbh, I think its beyond
-# my skillset at the moment. However, I might return to
-# it at a later time :)
+# This one I probably wont get to tbh, I think its beyond my skillset at the 
+# moment. However, I might return to it at a later time :)
 def sph_method():
     return
 
 message = 123456789
 cypher1, cypher2 = encrypt_elgamal(message, alice_pub, bob_priv)
 plain = decrypt_elgamal(cypher1, cypher2, alice_priv)
-print(f"Message: {message} has been encrypted into Cyphertext ({cypher1}, {cypher2}). \n\
-This has been decrypted into plaintext {plain}.")
+print(f"Message: {message} has been encrypted into Cyphertext ({cypher1},\
+{cypher2}). \n This has been decrypted into plaintext {plain}.")
