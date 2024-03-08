@@ -7,19 +7,17 @@ import time
 # REQUIRES ACTUAL SECURITY, THE PRIME NUMBER USED HERE IS TOO SMALL AND CAN BE
 # EASILY CRACKED WITH THE GIVEN ALGORITHMS ON A LAPTOP.
 
-# For the Jacky part of HW3. Elgamal Encryption stuff.
-# TODO: Make the algorithms separate from the HW stuff.
-# Make separate HW file then import the algorithms.
-
 # CONSTANTS GIVEN BY JACKY
 PRIME = 16977708269389697
 GENERATOR = 3
 
-# Creating Elgamal Encryption Scheme
-# NOTE: Assignment has a help tool to convert our message to a number,
-# so im assuming that we encrypt the whole number as one thing and as
-# such im treating this as enrypting one number as the message
 
+# NOTE: Elgamal encryption can use any large prime and generator in Z*p.
+# In this case I was given <PRIME> and <GENERATOR>, however if you want
+# to use different ones, you can modify either the static ints at the 
+# start or alter the functions to enable you to chose your prime and gen.
+# Remember: you must use the same prime and gen for encryption and decryption
+# or that is to say, when chosing keys they must be the same
 def encrypt_elgamal(m: int, A: int, b: int) -> tuple[int, int]:
     """Encrypts plaintext to cypher text using an Elgamal Scheme given:
     plaintext message <m>, public key <A>, private key <b>"""
@@ -36,7 +34,7 @@ def decrypt_elgamal(c1: int, c2: int, a: int) -> int:
     
 # |---------- Cracking the DLP ---------|
 
-# This works for just using shanks. Next will adapt it for SPH
+# Shank's Collision algorithm for a direct attack on the DLP
 def shanks_collision_dlp(p:int, g:int, h:int) -> int:
     n = 1 + math.floor(math.sqrt(p))
     sbaby = {}
@@ -49,8 +47,7 @@ def shanks_collision_dlp(p:int, g:int, h:int) -> int:
             return (sbaby[key] + sgiant[key]*n)%p
 
 
-# This is taking longer????? EDIT: Seems like i just had a lucky guess so it was
-# slower. With problem from Jacky its faster.
+# Shank's Collision algorithm for use in the SPH algorithm
 def shanks_collision_sph(p:int, g: int, h:int, gord: int) -> int: 
     n = 1 + math.floor(math.sqrt(gord))
     sbaby = {}
@@ -63,6 +60,8 @@ def shanks_collision_sph(p:int, g: int, h:int, gord: int) -> int:
             return (sbaby[key] + sgiant[key]*n)%p
 
 
+# NOTE: Avoid using this. Shank's is much better for large numbers,
+# however brute force might be fine for small numbers.
 def dlp_brute_force(p, g, h, orderg):
     """Brute force way to solve DLP. NOTE: This is not efficient,
     only for use in solving smaller DLP's that arise from SPH"""
@@ -71,8 +70,8 @@ def dlp_brute_force(p, g, h, orderg):
             return x
     return None
 
-# Implemented using Shank's Collision algorithm. To use brute force, comment out
-# line 98 and uncomment line 9.
+# Implemented with Shank's. To use brute force comment out line 96
+# and uncomment line 97
 def sph_method(p: int, g: int, h: int):
     time_start = time.time()
     """Solves DLP (g^x = h mod p) using SPH given:
@@ -102,44 +101,3 @@ def sph_method(p: int, g: int, h: int):
     print(f"DLP Cracked using the SPH Algorithm with Shank's Collision Algorithm\
     for DLP subproblems in {time_end - time_start} seconds.")
     return result[0]
-
-
-# |--------- Parts for Jacky ---------|
-
-# My Keys and Info
-alice_priv = 7777777
-alice_pub = pow(GENERATOR, alice_priv, PRIME)
-bob_priv = 4577
-message_text = "MCLAREN"
-message_numeric = 22122110271423
-# Found from previous crack
-a_priv_sph = 7954955227814072
-
-# Keys and Info received from Jacky
-a_pub = 16
-# a_priv = sph_method(PRIME, GENERATOR, a_pub)
-a_pub_check = pow(GENERATOR, a_priv_sph, PRIME)
-print(f"Alice's private key found to be {a_priv_sph} using SPH Cracking. Check \
-Equivalancy: Given pub {a_pub} == g^(Found priv:{a_priv_sph}) mod p? \
-{a_pub == a_pub_check}\n")
-
-cypher1, cypher2 = encrypt_elgamal(message_numeric, a_pub, bob_priv)
-plaintext_decrypted = decrypt_elgamal(cypher1, cypher2, a_priv_sph)
-print(f'''Message {message_numeric} encrypted into ({cypher1}, {cypher2}). \
-Cyphertext decrypted into {plaintext_decrypted}.''')
-
-# |---------- Testing ---------- |
-
-# print(shanks_collision_dlp(41, 6, 15))
-
-# print(alice_priv, alice_pub)
-
-# print(sph_method(16977708269389697, 3, pow(3, 295656438765387, P)))
-
-# print(pow(3, 7777777, 16977708269389697))
-
-# message = 123456789
-# cypher1, cypher2 = encrypt_elgamal(message, alice_pub, bob_priv)
-# plain = decrypt_elgamal(cypher1, cypher2, alice_priv)
-# print(f"Message: {message} has been encrypted into Cyphertext ({cypher1},\
-# {cypher2}). \n This has been decrypted into plaintext {plain}.")
