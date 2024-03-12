@@ -20,20 +20,25 @@ def pow_2_factor(n: int):
         n //= 2
     return k, n
 
-def primality_test(n: int, wit_num=128):
+
+# TODO: make a way of chosing if print statements happen?
+# i.e. add default pBool=False with no prints, if True yes
+# maybe also add an option to output to a file?
+# also add prints for fail?
+def primality_test(n: int, wit_num=128, pBool=False):
     """Miller-Rabin probablistic primality test to determine if n is 
     probably prime using <wit_num> number of witnesses"""
     for i in range (1, wit_num+1):
         a_i = rand.randint(2, n-1)
-        print(f"Checking {a_i} (num {i})...")
+        if pBool: print(f"Checking {a_i} (num {i})...")
         if np.gcd(n, a_i) != 1:
             return False
         elif pow(a_i, n-1, n) != 1:
             return False
-        print(f"Passed fermat test, checking MR...")
+        if pBool: print(f"Passed fermat test, checking MR...")
         k, q = pow_2_factor(n-1)
         if pow(a_i, q, n) == 1:
-            print(f"Passed MR on pow = q. Checking next a_i\n")
+            if pBool: print(f"Passed MR on pow = q. Checking next a_i\n")
             continue
         else:
             found = False
@@ -41,7 +46,7 @@ def primality_test(n: int, wit_num=128):
                 exp = ((2**l)*q)
                 power = pow(a_i, exp, n)
                 if power == (n-1):
-                    print(f"Passed MR on l = {l}: pow = {power}. Checking next a_i.\n")
+                    if pBool: print(f"Passed MR on l = {l}: pow = {power}. Checking next a_i.\n")
                     found = True
                     break
             if found:

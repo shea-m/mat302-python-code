@@ -34,6 +34,13 @@ def decrypt_elgamal(c1: int, c2: int, a: int) -> int:
     
 # |---------- Cracking the DLP ---------|
 
+# The shanks can be done in a simpler way:
+# Instead of having to calculate all of the sgiants then comparing, we can
+# find the first one, and then check, raise it to the power of p, then check
+# again. This should save some loops
+# I'll update this if I have extra time, however this worked (in my attempt
+# for Charlie, I was able to find it in ~3.5 Minutes)
+
 # Shank's Collision algorithm for a direct attack on the DLP
 def shanks_collision_dlp(p:int, g:int, h:int) -> int:
     n = 1 + math.floor(math.sqrt(p))

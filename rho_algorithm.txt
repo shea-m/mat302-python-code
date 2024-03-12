@@ -1,0 +1,31 @@
+|------- Given by TA (Dev) -------|
+Preliminary: Pick some x_0 in Z_n, some f: x_n -> x_n where f is ideally degree
+2 or greater function (ie not affine/linear)
+
+Let x_i be defined as x_i = f(x_{i-1}) mod n
+For 0 <= k <= i-1, of d = gcd(x_i - x_k, n) >= 1, then d|n; d is a factor
+othersie: iterate 
+
+Code framework:
+1. Decide on inputs of function
+2. Decide on what helper functions to create and libraries to use
+3. Think about how to store data inside our function and how you will be
+accessing that data
+
+Inputs: x_0, n; Outputs: data
+hepler function: define f
+import library with gcd [I'll probably use math]
+
+|------- My brainstorming -------|
+when should it stop?
+
+
+check x_0 | n, if yes --> return
+dictionary {i: x_i}
+x_{i-1} = x_0
+while d not | n
+    dict[i] = f(x_{i-1})
+    for k in range i
+        d = gcd(dict[i] - dict[k], n)
+        if d | n
+            return d 
