@@ -1,37 +1,3 @@
-import math
-import sympy
-import time
-
-# %-%-%-%-%-%-%-%-% IMPORTANT %-%-%-%-%-%-%-%-%-%
-# THIS SCRIPT IS PURELY FOR EDUCATIONAL PURPOSES. DO NOT USE FOR ANYTHING THAT
-# REQUIRES ACTUAL SECURITY, THE PRIME NUMBER USED HERE IS TOO SMALL AND CAN BE
-# EASILY CRACKED WITH THE GIVEN ALGORITHMS ON A LAPTOP.
-
-# CONSTANTS GIVEN BY JACKY
-PRIME = 16977708269389697
-GENERATOR = 3
-
-
-# NOTE: Elgamal encryption can use any large prime and generator in Z*p.
-# In this case I was given <PRIME> and <GENERATOR>, however if you want
-# to use different ones, you can modify either the static ints at the 
-# start or alter the functions to enable you to chose your prime and gen.
-# Remember: you must use the same prime and gen for encryption and decryption
-# or that is to say, when chosing keys they must be the same
-def encrypt_elgamal(m: int, A: int, b: int) -> tuple[int, int]:
-    """Encrypts plaintext to cypher text using an Elgamal Scheme given:
-    plaintext message <m>, public key <A>, private key <b>"""
-    c1 = pow(GENERATOR, b, PRIME)
-    c2 = (m * pow(A, b, PRIME)) % PRIME
-    return (c1, c2)
-
-
-def decrypt_elgamal(c1: int, c2: int, a: int) -> int:
-    """Decrypt cyphertext encrypted with an Elgamal Scheme given:
-    cyphertext1 <c1>, cyphertext2 <c2>, private key <a>"""
-    return (pow(c1, -a, PRIME)*c2 % PRIME)
-    
-    
 # |---------- Cracking the DLP ---------|
 
 # The shanks can be done in a simpler way:
@@ -40,6 +6,10 @@ def decrypt_elgamal(c1: int, c2: int, a: int) -> int:
 # again. This should save some loops
 # I'll update this if I have extra time, however this worked (in my attempt
 # for Charlie, I was able to find it in ~3.5 Minutes)
+
+import math
+import time
+import sympy
 
 # Shank's Collision algorithm for a direct attack on the DLP
 def shanks_collision_dlp(p:int, g:int, h:int) -> int:

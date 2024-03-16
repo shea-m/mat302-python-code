@@ -7,7 +7,7 @@
 # NOTE: If you want to drop the assumption of compositeness,
 # you can add a primality test by importing primality_test.py
 import math
-import Utility_Files.primality_test as prime
+import Utility_Files.primality as prime
 
 
 def func(x: int, n: int) -> int:
