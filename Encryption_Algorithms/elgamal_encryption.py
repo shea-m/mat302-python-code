@@ -20,7 +20,7 @@
 # We will assume g and p are given
 import random as rand
 import numpy as np
-import primality_test as prime
+import Utility_Files.primality_test as prime
 
 G_GEN = 1 # PLACEHOLDER
 P_PRIME = 1 # PLACEHOLDER
