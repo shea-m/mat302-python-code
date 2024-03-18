@@ -1,5 +1,5 @@
 import sys
-sys.path.append("C:/Users/srmsi/Documents/University of Toronto/Year 3/Winter 2024/MAT302/mat302-python-code")
+sys.path.append(".")
 import Utility_Files.discretelog as dlp
 
 # Just a little script that has all the information I receied from Jacky
