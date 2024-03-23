@@ -50,8 +50,11 @@ def fermat_facorization(n: int) -> tuple[int,int]:
             
 
 
-a = prime.generate_prime(4529378879)
-b = prime.generate_prime(4522397982)
+a = prime.generate_prime(45293788759)
+b = prime.generate_prime(45223979852)
 
-rho_factorization(124, a*b)
-fermat_facorization(a*b)
+fermat_facorization(228223876469)
+# rho_factorization(124, 228223876469)
+
+# rho_factorization(124, a*b)
+# fermat_facorization(a*b)

@@ -25,7 +25,7 @@ def pow_2_factor(n: int):
 # i.e. add default pBool=False with no prints, if True yes
 # maybe also add an option to output to a file?
 # also add prints for fail?
-def primality_test(n: int, wit_num=128, pBool=False):
+def test(n: int, wit_num=128, pBool=False):
     """Miller-Rabin probablistic primality test to determine if n is 
     probably prime using <wit_num> number of witnesses"""
     for i in range (1, wit_num+1):
@@ -55,13 +55,13 @@ def primality_test(n: int, wit_num=128, pBool=False):
                 return False
     return True
 
-def generate_prime(n: int):
+def generate(n: int):
     """Generates a probabalistic prime using Miller-Rabin with size bounded
     by n, 2n"""
     k = rand.randint(2, n-1)
     if k % 2 == 0:
         k += 1
-    while not primality_test(k):
+    while not test(k):
         k = rand.randint(2, n-1)
     return k
 
@@ -69,5 +69,5 @@ def generate_prime(n: int):
 # print(pow(23, 10, 41))
 # print(pow(107692, 294408, 294409))
 # primality_test(294409,10)
-primality_test(118901527, 25)
+test(118901527, 25)
 # print(generate_prime(265748756348936589346583968945768934372652358295628973562389))
