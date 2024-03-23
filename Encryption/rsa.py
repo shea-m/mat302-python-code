@@ -4,12 +4,6 @@ import CryptographyUtilities.primality as prime
 import random as rand
 import math
 
-
-# Maybe make a genernate key pairs:
-# Takes input of size of prime factors
-# Generates p,q --> finds n, phi(n)
-# Find e, d
-# Returns dict of keys?
 def generate_coprime(n: int):
     while True:
         e = rand.randint(1, n)
@@ -35,4 +29,3 @@ def decrypt(c: int, d: int, n: int):
     return pow(c, d, n)
 
         
-# print(generate_keys(98674394, 8953152))

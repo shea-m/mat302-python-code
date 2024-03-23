@@ -7,6 +7,5 @@
     - If I just rename to encrypt/decrypt, then import whole folder will it
       be like rsa.encrypt etc?
     - This is the lowest priority
-- Update Encryption file names to remove cypher
-- Rename functions to just encrypt/decrypt so its, for example, rsa.encrypt not
-  rsa.encrypt_rsa
+- Reorganize homework files
+- Must be a cleaner sol than sys.path.append(".") everytime?
