@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-import Utility_Files.discretelog as dlp
+import CryptographyUtilities.discretelog as dlp
 
 # Just a little script that has all the information I receied from Jacky
 # and all of my solutions. There is nothing of real value here unless you

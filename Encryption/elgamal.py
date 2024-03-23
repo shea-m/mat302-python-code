@@ -1,4 +1,4 @@
-import Utility_Files.discretelog as dlp
+import CryptographyUtilities.discretelog as dlp
 
 # %-%-%-%-%-%-%-%-% IMPORTANT %-%-%-%-%-%-%-%-%-%
 # THIS SCRIPT IS PURELY FOR EDUCATIONAL PURPOSES. DO NOT USE FOR ANYTHING THAT

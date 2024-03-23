@@ -1,0 +1,9 @@
+As noted in the readme, this repository contains implementations of algorithms
+discussed in MAT302: Introduction to Algebraic Cryptography at University of
+Toronto. The implementation of these algorithsm was based on work done in class
+and based on the course notes provided by Professor Qun Wang. This folder will
+contain some brief overview of each of the algorithms and utilities used here.
+For further reading you can check out the secondary text for this course:
+
+An Introduction to Mathematical Cryptography, 2nd Ed by Hofstein, Pipher, and
+Silverman. ISBN 978-1-4939-1710-5, DOI 10.1007/978-1-4939-1711-2.

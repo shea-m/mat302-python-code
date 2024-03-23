@@ -1,31 +1,17 @@
-# |---------- Cracking the DLP ---------|
-
-# The shanks can be done in a simpler way:
-# Instead of having to calculate all of the sgiants then comparing, we can
-# find the first one, and then check, raise it to the power of p, then check
-# again. This should save some loops
-# I'll update this if I have extra time, however this worked (in my attempt
-# for Charlie, I was able to find it in ~3.5 Minutes)
-
 import math
 import time
 import sympy
+import CustomErrors as er
 
-# Shank's Collision algorithm for a direct attack on the DLP
-def shanks_collision_dlp(p:int, g:int, h:int) -> int:
-    n = 1 + math.floor(math.sqrt(p))
-    sbaby = {}
-    sgiant = {}
-    for i in range(0, n):
-        sbaby[pow(g, i, p)] = i
-        sgiant[h*pow(g, -i*n, p)%p] = i
-    for key in sbaby:
-        if key in sgiant:
-            return (sbaby[key] + sgiant[key]*n)%p
+# NOTE: Shank's and SPH should be tested before deleting the commented out
+# single use shanks
 
-
-# Shank's Collision algorithm for use in the SPH algorithm
-def shanks_collision_sph(p:int, g: int, h:int, gord: int) -> int: 
+# NOTE: By adding default arg for gord i should be able to use just one
+# shanks that works for SPH or by itself
+def shanks(p:int, g: int, h:int, gord=0) -> int:
+    """Shanks Collision Algorithm for use by itself or with SPH. If
+    <gord> is not provided, it will default to p""" 
+    if gord == 0: gord = p
     n = 1 + math.floor(math.sqrt(gord))
     sbaby = {}
     sgiant = {}
@@ -35,17 +21,17 @@ def shanks_collision_sph(p:int, g: int, h:int, gord: int) -> int:
     for key in sbaby:
         if key in sgiant:
             return (sbaby[key] + sgiant[key]*n)%p
+    raise er.NullSolution
+    
 
-
-# NOTE: Avoid using this. Shank's is much better for large numbers,
-# however brute force might be fine for small numbers.
-def dlp_brute_force(p, g, h, orderg):
-    """Brute force way to solve DLP. NOTE: This is not efficient,
-    only for use in solving smaller DLP's that arise from SPH"""
+def dlp_brute_force(p, g, h, orderg=0):
+    """Brute force attack on DLP by trying all posibilities. NOTE: This
+    is highly inefficient for large p as it has exponential bit complexity"""
+    if orderg == 0: orderg = p
     for x in range(1, orderg):
         if pow(g, x, p) == h:
             return x
-    return None
+    raise er.NullSolution
 
 # Implemented with Shank's. To use brute force comment out line 96
 # and uncomment line 97
@@ -71,10 +57,12 @@ def sph_method(p: int, g: int, h: int):
     a_ks = []
     for i in range(len(m_pows)):
         print(f"Running DLP Subproblem {i}...")
-        a_ks.append(shanks_collision_sph(p, g_ks[i], h_ks[i], list_of_powers[i]))
+        a_ks.append(shanks(p, g_ks[i], h_ks[i], list_of_powers[i]))
         # a_ks.append(dlp_brute_force(p, g_ks[i], h_ks[i], list_of_powers[i]))
     result = sympy.ntheory.modular.crt(list_of_powers, a_ks)
     time_end = time.time()
     print(f"DLP Cracked using the SPH Algorithm with Shank's Collision Algorithm\
     for DLP subproblems in {time_end - time_start} seconds.")
     return result[0]
+
+dlp_brute_force(11, 3, 8)

@@ -1,6 +1,6 @@
 import sys
 sys.path.append(".")
-import Utility_Files.primality as prime
+import CryptographyUtilities.primality as prime
 import random as rand
 import math
 
@@ -35,4 +35,4 @@ def decrypt(c: int, d: int, n: int):
     return pow(c, d, n)
 
         
-print(generate_keys(98674394, 8953152))
+# print(generate_keys(98674394, 8953152))

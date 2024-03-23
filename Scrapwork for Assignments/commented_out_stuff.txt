@@ -1,0 +1,17 @@
+Stuff that has been deleted but still but be needed after further testing
+
+discretelog:
+def shanks_collision(p:int, g:int, h:int) -> int:
+    """Shank's Collision Algorithm for a direct attack on the Discrete
+    Log Problem. Solves the equation g^x = h mod p given inputs:
+    <p> a prime, <g> a generator>, and <h> an integer"""
+    n = 1 + math.floor(math.sqrt(p))
+    sbaby = {}
+    sgiant = {}
+    for i in range(0, n):
+        sbaby[pow(g, i, p)] = i
+        sgiant[h*pow(g, -i*n, p)%p] = i
+    for key in sbaby:
+        if key in sgiant:
+            return (sbaby[key] + sgiant[key]*n)%p
+    raise NullSolution
