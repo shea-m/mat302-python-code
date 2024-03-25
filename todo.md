@@ -9,3 +9,5 @@
     - This is the lowest priority
 - Reorganize homework files
 - Must be a cleaner sol than sys.path.append(".") everytime?
+
+- Make elliptic curve class?
