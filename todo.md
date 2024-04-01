@@ -9,5 +9,7 @@
     - This is the lowest priority
 - Reorganize homework files
 - Must be a cleaner sol than sys.path.append(".") everytime?
+- in primality check: add a subfolder that outputs all the current print info
+  to be something like [prime_number]_primalitycheck.txt
 
 - Make elliptic curve class?
