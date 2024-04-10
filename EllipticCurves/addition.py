@@ -1,12 +1,5 @@
-# Given P=(x_p, y_p), Q=(x_q, y_q) and s = (x_p - x_q)/(y_p - y_q) and F_(p^k)
-# P + Q = R
-# x_r = s^2 - x_p - x_q mod p^k | y_r = -y_p + s(x_p - x_r) mod p^k
-# P + P:
-# s = (3(x_p)^2+ a)/(2y_p) mod p^k
-
-# Need to pick a & b such that non singular
-# Want eliptic curve y^2 = x^3 + ax + b represented as (a,b)
-# Points as (x_i, y_i)
+# TODO: Update so that O is not (0,0)
+# TODO: Make scalar_mult that is recursively defined (Dev will post code)
 import sys
 sys.path.append(".")
 import CryptographyUtilities.CustomErrors as er
@@ -35,9 +28,7 @@ def compute_s(p: tuple[int, int], q: tuple[int,int], a: int, m: int) -> int:
         x2, y2 = q[0], q[1]
         return ((y2 - y1) * pow((x2-x1), -1, m))%m
 
-# Given a curve y^2 = x^3 + ax + b, point P=(x1,y1), point Q(x1,y1)
-# and the curve is on some field F_m
-# Denote O as (0,0)
+
 def add_points(p: tuple[int, int], q: tuple[int,int], a: int, m: int)->tuple[int,int]:
     if p[0] == q[0] and p != q: # If x1 = x2, return O
         return (0,0)
@@ -51,8 +42,32 @@ def add_points(p: tuple[int, int], q: tuple[int,int], a: int, m: int)->tuple[int
         x3 = (pow(s, 2, m) - x1 - x2)%m
         y3 = (s*(x1-x3)-y1)%m
         return (x3,y3)
+    
+
+def double_point(p: tuple, curve: int, ord: int):
+    return add_points(p, p, curve, ord)
+
+    
+def iterative_scalar_mult(a: int, P: tuple, curve: int, ord: int) -> tuple:
+    p = P
+    for i in range(2, a+1):
+        p = add_points(p, P, curve, ord)
+    return p
 
 
+def recursive_scalar_mult(a: int, P: tuple, curve: int, ord: int) -> tuple:
+    if a == 0:
+        return (0,0)
+    elif a == 1:
+        return P
+    else:
+        pNew = double_point(P, curve, ord)
+        pNew = recursive_scalar_mult(a//2, pNew, curve, ord)
+        if a % 2 == 1:
+            pNew = add_points(P, pNew, curve, ord)
+        return pNew
 
-# print(add_points((2,3), (2,3), 3, 13)) # should be (12,11)
+
+# print(iterative_scalar_mult(6789, (5, 4296), 3, 12589))
+# print(recursive_scalar_mult(6789, (5, 4296), 3, 12589))
     
