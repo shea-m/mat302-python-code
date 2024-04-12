@@ -67,6 +67,16 @@ def recursive_scalar_mult(a: int, P: tuple, curve: int, ord: int) -> tuple:
             pNew = add_points(P, pNew, curve, ord)
         return pNew
 
+def compute_order(P: tuple, curve: int, ord: int):
+    p = P
+    i = 2
+    if P == (0,0):
+     return 1
+    while True:
+        p = add_points(p, P, curve, ord)
+        if p == (0,0):
+            return i
+        i += 1
 
 # print(iterative_scalar_mult(6789, (5, 4296), 3, 12589))
 # print(recursive_scalar_mult(6789, (5, 4296), 3, 12589))
