@@ -1,10 +1,12 @@
 import numpy as np
+import sympy as sp
 import random
 import math
 
 
 # ---------- PRIMALITY ----------
 # TODO: Stress test primality test
+# TODO: Add custom errors
 
 
 def base2factor(n: int, k=0) -> tuple[int, int]:
@@ -61,7 +63,7 @@ def dFunc(x: int, n: int) -> int:
 
 
 def rho_factorization(x0: int, n: int) -> int:
-    """Factorize a known composite <n> using Pollard's Rho Method with x0
+    """Factor a known composite <n> using Pollard's Rho Method with x0
     Currently using dFunc, future will include ability to chose function
     PRECONDITION: n is composite"""
     x_set = {0: x0}
@@ -76,6 +78,50 @@ def rho_factorization_adjusted():
     pass
 
 
-def fermat_factorization():
+def fermat_factorization(n: int) -> tuple[int,int]:
+    """Fact a known composite <n> where the factors are close in size"""
+    rootn = math.floor(math.sqrt(n))
+    for i in range(1, n):
+        t = rootn + i
+        if math.sqrt(t**2 - n) % 1 == 0:
+            s = int(math.sqrt(t**2 - n))
+            return t + s, t - s
+        
+
+# ---------- DLP ----------
+
+
+def dlp_brute_force(p: int, g: int, h: int, ordg: int) -> int:
+    """Brute force method for the DLP problem <h> = <g>^x mod <p> where
+    <ordg> is the order of the generator <g>
+    NOTE: This method is EXTREMELY inefficient and shouldnt be used"""
+    for x in range(ordg):
+        if pow(g, x, p) == h:
+            return x
+
+
+def shanks_collision(p: int, g: int, h: int, ordg=0) -> int:
+    """Shanks Collision algorithm for solving DLP problem <h> = <g>^x mod <p> 
+    where <ordg> is the order of the generator <p>"""
+    if ordg == 0: ordg = p
+    n = 1 + math.floor(math.sqrt(p))
+    baby, giant = {}, {}
+    for i in range(n):
+        baby[pow(g, i, p)] = i
+        giant[h*pow(g, -i*n, p)%p] = i
+    for key in baby:
+        if key in giant:
+            return (baby[key] + giant[key]*n)%p
+
+
+
+def sph_algorithm():
+    pass
+
+
+# Currently implemented SPH using the implementation suggestion in Qun Wang's
+# MAT302 notes. A better method would use indexing with a dictionary. So that
+# said, TODO: Implement SPH with indexing 
+def sph_indexing():
     pass
 
